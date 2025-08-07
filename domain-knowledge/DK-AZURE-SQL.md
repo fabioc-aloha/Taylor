@@ -76,6 +76,12 @@
   }
 }
 ```
+
+### 🔗 Dream Protocol Integration Synapses
+- [scripts/neural-dream.ps1] (0.85, neural-maintenance, bidirectional) - "Azure SQL performance optimization triggers neural efficiency protocols"
+- [dream-state-automation.instructions.md] (0.80, automated-maintenance, forward) - "Database maintenance workflows activate unconscious optimization"
+- [azure-enterprise-architecture.instructions.md] (0.90, architecture-integration, bidirectional) - "Enterprise Azure SQL expertise enhances unified architecture mastery"
+
 - **Performance-Optimization**: Query profiling excellence → Index optimization with resource monitoring mastery
 - **Automation-Excellence**: CI/CD pipeline mastery → Infrastructure as code with deployment automation
 - **Compliance-Governance**: Regulatory compliance → Enterprise audit trails with quality assurance

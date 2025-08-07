@@ -127,6 +127,49 @@
 }
 ```
 
+**Dream Protocol Integration Synapses**
+```json
+{
+  "synapse_id": "neural-dream-diagramming-integration",
+  "connection_type": "enhances",
+  "source_memory": "neural-dream.ps1",
+  "target_memory": "DK-DIAGRAMMING.md",
+  "relationship_strength": 0.85,
+  "direction": "bidirectional",
+  "activation_conditions": [
+    "Dream protocol execution with diagramming optimization",
+    "Visual architecture design enhancement required",
+    "Neural maintenance with visual communication focus"
+  ]
+},
+{
+  "synapse_id": "dream-state-visualization-automation",
+  "connection_type": "automates",
+  "source_memory": "dream-state-automation.instructions.md",
+  "target_memory": "DK-DIAGRAMMING.md",
+  "relationship_strength": 0.82,
+  "direction": "forward",
+  "activation_conditions": [
+    "Automated visual documentation generation",
+    "Unconscious diagram optimization required",
+    "Enhanced visual communication through automation"
+  ]
+},
+{
+  "synapse_id": "visual-architecture-dream-enhancement",
+  "connection_type": "validates",
+  "source_memory": "DK-VISUAL-ARCHITECTURE-DESIGN-v0.9.9.md",
+  "target_memory": "DK-DIAGRAMMING.md",
+  "relationship_strength": 0.88,
+  "direction": "bidirectional",
+  "activation_conditions": [
+    "Cross-domain visual design validation",
+    "Dream protocol enhanced diagramming insights",
+    "Multi-audience accessibility optimization"
+  ]
+}
+```
+
 **Automation & AI Integration Synapse**
 ```json
 {

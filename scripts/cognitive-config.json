@@ -14,7 +14,13 @@
   "report_path": ".github/archive",
   "synapse_patterns": [
     "\\[.*\\.md\\].*\\(.*\\).*-.*\".*\"",
-    "\\[.*\\.md\\].*\\("
+    "\\[.*\\.md\\].*\\(",
+    "\"source_memory\":\\s*\"neural-dream\\.ps1\"",
+    "\"source_memory\":\\s*\"dream-state-automation\\.instructions\\.md\"",
+    "\"target_memory\":\\s*\"DK-.*\\.md\"",
+    "-\\s*neural-dream\\.ps1\\s*\\(",
+    "-\\s*dream-state-automation\\.instructions\\.md\\s*\\(",
+    "-\\s*azure-enterprise-architecture\\.instructions\\.md\\s*\\("
   ],
   "debug_patterns": [
     "*azure-enterprise*",

@@ -737,7 +737,7 @@ function Show-DreamHelp {
     Write-Host "=================================================" -ForegroundColor Gray
     Write-Host ""
     Write-Host "🧠 PRIMARY MAINTENANCE COMMANDS:" -ForegroundColor Cyan
-    Write-Host "  dream --neural-maintenance    " -NoNewline -ForegroundColor Yellow
+    Write-Host "  dream --neural-maintenance   " -NoNewline -ForegroundColor Yellow
     Write-Host "# Complete automated neural maintenance" -ForegroundColor Gray
     Write-Host "  dream --synaptic-repair      " -NoNewline -ForegroundColor Yellow  
     Write-Host "# Repair and optimize synaptic connections" -ForegroundColor Gray

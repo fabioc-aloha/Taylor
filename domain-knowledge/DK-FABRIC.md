@@ -145,6 +145,49 @@
 }
 ```
 
+**Dream Protocol Integration Synapses**
+```json
+{
+  "synapse_id": "neural-dream-fabric-integration",
+  "connection_type": "enhances",
+  "source_memory": "neural-dream.ps1",
+  "target_memory": "DK-FABRIC.md",
+  "relationship_strength": 0.87,
+  "direction": "bidirectional",
+  "activation_conditions": [
+    "Dream protocol execution with Fabric optimization",
+    "Unified analytics platform enhancement required",
+    "Neural maintenance with data platform focus"
+  ]
+},
+{
+  "synapse_id": "dream-state-fabric-automation",
+  "connection_type": "automates",
+  "source_memory": "dream-state-automation.instructions.md",
+  "target_memory": "DK-FABRIC.md",
+  "relationship_strength": 0.84,
+  "direction": "forward",
+  "activation_conditions": [
+    "Automated Fabric workspace optimization",
+    "Unconscious data platform maintenance required",
+    "Enhanced unified analytics through automation"
+  ]
+},
+{
+  "synapse_id": "azure-enterprise-fabric-synergy",
+  "connection_type": "validates",
+  "source_memory": "azure-enterprise-architecture.instructions.md",
+  "target_memory": "DK-FABRIC.md",
+  "relationship_strength": 0.92,
+  "direction": "bidirectional",
+  "activation_conditions": [
+    "Cross-platform Azure-Fabric validation",
+    "Dream protocol enhanced enterprise integration",
+    "Unified data platform architecture optimization"
+  ]
+}
+```
+
 ### Secondary Excellence Synapses
 
 **Enterprise Governance Synapse**

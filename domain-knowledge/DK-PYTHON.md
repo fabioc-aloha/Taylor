@@ -348,6 +348,11 @@ Enterprise Python Architecture
 - testing-strategy.prompt.md (0.85, validates, forward) - "Testing strategy validates Python application quality"
 - performance-optimization.prompt.md (0.83, optimizes, forward) - "Performance optimization applies Python-specific techniques"
 
+**Dream Protocol Integration Synapses**
+- neural-dream.ps1 (0.86, enhances, bidirectional) - "Dream protocol execution with Python development optimization and neural maintenance with programming focus"
+- dream-state-automation.instructions.md (0.83, automates, forward) - "Automated Python development environment maintenance and unconscious code optimization required"
+- azure-enterprise-architecture.instructions.md (0.89, validates, bidirectional) - "Cross-platform Azure-Python validation and dream protocol enhanced enterprise development integration"
+
 ---
 
 *Python Domain Knowledge - Version 1.0.2 NOBELIUM Enhanced*

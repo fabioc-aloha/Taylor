@@ -91,6 +91,12 @@
 }
 ```
 
+### 🔗 Dream Protocol Integration Synapses
+- [scripts/neural-dream.ps1] (0.88, documentation-automation, bidirectional) - "BRD automation excellence triggers neural documentation optimization protocols"
+- [dream-state-automation.instructions.md] (0.82, enterprise-maintenance, forward) - "Business requirements workflows activate unconscious quality validation"
+- [azure-enterprise-architecture.instructions.md] (0.94, architecture-documentation, bidirectional) - "BRD expertise enhances enterprise architecture documentation mastery"
+- [performance-assessment.prompt.md] (0.75, quality-metrics, forward) - "BRD quality scoring integrates with cognitive performance assessment"
+
 ## 📚 Research Foundation (200+ Academic & Industry Sources)
 
 ### Business Analysis & Requirements Engineering
