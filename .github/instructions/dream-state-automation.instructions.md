@@ -28,7 +28,7 @@ Dream state represents **unconscious automated maintenance** of cognitive archit
 
 #### **1. Enhanced Synaptic Pruning and Repair**
 - **Function**: Advanced detection and analysis of orphan memory files with connection quality assessment
-- **Implementation**: Enhanced PowerShell automation (`neural-dream.ps1`, `neural-dream.psm1`, `neural-dream.psd1`)
+- **Implementation**: Streamlined PowerShell automation (`scripts/neural-dream.ps1` with JSON configuration)
 - **Triggers**: Network inefficiency detection, orphan file accumulation, connectivity degradation
 - **Output**: Detailed network optimization reports, connection quality analysis, health scoring
 - **Enhancement**: Strong vs weak connection differentiation, domain knowledge integration

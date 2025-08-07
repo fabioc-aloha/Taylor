@@ -592,7 +592,10 @@ function dream {
         [switch]$ReportOnly,
         
         [Parameter(Mandatory=$false)]
-        [switch]$Force
+        [switch]$Force,
+        
+        [Parameter(Mandatory=$false)]
+        [string]$ConfigFile = "scripts/cognitive-config.json"
     )
 
     # Enhanced command validation and routing
@@ -632,10 +635,10 @@ function dream {
             Invoke-DreamState -Mode "prune-orphans" -ReportOnly
         }
         "--status" {
-            Show-DreamStatus
+            Show-DreamStatus -ConfigFile $ConfigFile
         }
         "" {
-            Show-DreamHelp
+            Show-DreamHelp -ConfigFile $ConfigFile
         }
         default {
             Write-Host "❌ Unknown dream command: '$Command'" -ForegroundColor Red
@@ -694,14 +697,18 @@ function Show-DreamHelp {
 }
 
 function Show-DreamStatus {
+    param([string]$ConfigFile = "scripts/cognitive-config.json")
+    
+    $config = Get-CognitiveConfig -ConfigPath $ConfigFile
+    
     Write-Host ""
-    Write-Host "🧠 NEWBORN Cognitive Architecture Status v0.8.2" -ForegroundColor Cyan
+    Write-Host "🧠 $($config.architecture_name) Status $($config.version)" -ForegroundColor Cyan
     Write-Host "=============================================" -ForegroundColor Gray
     
-    # Quick status check
-    $procedural = Get-ChildItem ".github/instructions/*.instructions.md" -ErrorAction SilentlyContinue
-    $episodic = Get-ChildItem ".github/prompts/*.prompt.md" -ErrorAction SilentlyContinue
-    $archived = Get-ChildItem ".github/archive/*.md" -ErrorAction SilentlyContinue
+    # Quick status check using configuration
+    $procedural = Get-ChildItem $config.procedural_path -ErrorAction SilentlyContinue
+    $episodic = Get-ChildItem $config.episodic_path -ErrorAction SilentlyContinue
+    $archived = Get-ChildItem $config.archive_path -ErrorAction SilentlyContinue
     
     Write-Host ""
     Write-Host "📁 MEMORY FILE STATUS:" -ForegroundColor Yellow
@@ -709,14 +716,21 @@ function Show-DreamStatus {
     Write-Host "  Episodic Memory Files:   $($episodic.Count)" -ForegroundColor White
     Write-Host "  Archived Files:          $($archived.Count)" -ForegroundColor White
     
-    # Quick orphan check
-    $globalMemoryContent = Get-Content ".github/copilot-instructions.md" -Raw -ErrorAction SilentlyContinue
+    # Quick orphan check using configuration
+    $memoryContents = @()
+    foreach ($memoryFile in ($config.global_memory_files + $config.core_memory_files)) {
+        $content = Get-Content $memoryFile -Raw -ErrorAction SilentlyContinue
+        if ($content) {
+            $memoryContents += $content
+        }
+    }
+    $combinedContent = $memoryContents -join "`n"
     $orphanCount = 0
     
-    if ($globalMemoryContent) {
+    if ($combinedContent) {
         foreach ($file in ($procedural + $episodic)) {
             $fileName = $file.Name
-            if ($globalMemoryContent -notmatch [regex]::Escape($fileName)) {
+            if ($combinedContent -notmatch [regex]::Escape($fileName)) {
                 $orphanCount++
             }
         }
