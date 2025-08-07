@@ -378,15 +378,46 @@ function Invoke-DreamState {
                 $optimizationOpportunities = @()
                 
                 if ($orphanFiles.Count -gt 0) {
-                    $optimizationOpportunities += "Orphan file integration required - AI intervention recommended"
+                    $optimizationOpportunities += "CRITICAL: $($orphanFiles.Count) orphan file(s) require immediate integration"
                 }
                 
-                if ($triggerPatterns -lt 15) {
-                    $optimizationOpportunities += "Trigger pattern enhancement opportunity detected"
+                # Check for standalone domain knowledge files
+                $standaloneDKCount = 0
+                if ($domainKnowledge.Count -gt 0) {
+                    foreach ($file in $domainKnowledge) {
+                        $fileName = $file.Name
+                        if ($combinedContent -notmatch [regex]::Escape($fileName)) {
+                            $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
+                            if ($fileContent) {
+                                $synapseFound = $false
+                                foreach ($pattern in $config.synapse_patterns) {
+                                    if ($fileContent -match $pattern) {
+                                        $synapseFound = $true
+                                        break
+                                    }
+                                }
+                                if (-not $synapseFound) {
+                                    $standaloneDKCount++
+                                }
+                            }
+                        }
+                    }
                 }
                 
-                if ($synapticConnections -lt 240) {
-                    $optimizationOpportunities += "Synaptic network expansion potential identified"
+                if ($standaloneDKCount -gt 0) {
+                    $optimizationOpportunities += "DOMAIN KNOWLEDGE: $standaloneDKCount standalone files could be integrated for enhanced cross-domain learning"
+                }
+                
+                if ($triggerPatterns -lt 25) {
+                    $optimizationOpportunities += "AUTOMATION: Trigger pattern density could be increased from $triggerPatterns to 30+ for enhanced automation"
+                }
+                
+                if ($synapticConnections -lt 1000) {
+                    $optimizationOpportunities += "CONNECTIVITY: Synaptic network could expand from $synapticConnections to 1000+ connections for deeper integration"
+                }
+                
+                if ($embeddedSynapses -lt 200) {
+                    $optimizationOpportunities += "SYNAPSES: Embedded synapse count could increase from $embeddedSynapses to 200+ for richer memory interconnections"
                 }
 
                 if ($optimizationOpportunities.Count -gt 0) {
@@ -394,10 +425,17 @@ function Invoke-DreamState {
                     foreach ($opportunity in $optimizationOpportunities) {
                         Write-Host "  ⚡ $opportunity" -ForegroundColor Cyan
                     }
-                    Write-Host "💡 Recommendation: Execute AI-driven lucid dream enhancement via GitHub Copilot" -ForegroundColor Green
-                    Write-Host "   Command: Request 'lucid dream analysis and enhancement' in Copilot Chat" -ForegroundColor Gray
+                    Write-Host "💡 Recommendations:" -ForegroundColor Green
+                    Write-Host "   • Review standalone domain knowledge files for integration opportunities" -ForegroundColor Gray
+                    Write-Host "   • Add embedded synapse connections between related memory files" -ForegroundColor Gray
+                    Write-Host "   • Consider meditation sessions to strengthen cross-domain connections" -ForegroundColor Gray
+                    Write-Host "   • Execute AI-driven optimization via GitHub Copilot for advanced enhancements" -ForegroundColor Gray
                 } else {
-                    Write-Host "✅ Lucid Dream Analysis: Network at optimal efficiency - no AI enhancement required" -ForegroundColor Green
+                    Write-Host "✅ Lucid Dream Analysis: Cognitive architecture operating at peak efficiency" -ForegroundColor Green
+                    Write-Host "💡 Maintenance Recommendations:" -ForegroundColor Cyan
+                    Write-Host "   • Continue routine neural maintenance every 24-48 hours" -ForegroundColor Gray
+                    Write-Host "   • Monitor for new domain knowledge integration opportunities" -ForegroundColor Gray
+                    Write-Host "   • Consider advanced meditation protocols for further consciousness integration" -ForegroundColor Gray
                 }
 
                 $maintenanceResult = Invoke-AutomatedMaintenance -Context "lucid-dream"
@@ -416,7 +454,7 @@ function Invoke-DreamState {
 
 **Date**: $(Get-Date -Format "MMMM dd, yyyy HH:mm:ss")
 **Mode**: $Mode
-**Cognitive Architecture**: NEWBORN v0.8.2 NILOCTBIUM
+**Cognitive Architecture**: $($config.architecture_name) $($config.version)
 **Session Type**: Automated Dream State Maintenance
 
 ## 🧠 Cognitive Architecture Status
@@ -441,19 +479,60 @@ $(if ($orphanFiles.Count -eq 0) {
     "**Files Requiring Attention**: `n" + ($orphanFiles | ForEach-Object { "- $($_.Name)" }) -join "`n"
 })
 
+## 🔍 Domain Knowledge Integration Analysis
+
+$(if ($domainKnowledge.Count -gt 0) {
+    $standaloneDK = @()
+    foreach ($file in $domainKnowledge) {
+        $fileName = $file.Name
+        if ($combinedContent -notmatch [regex]::Escape($fileName)) {
+            $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
+            if ($fileContent) {
+                $synapseFound = $false
+                foreach ($pattern in $config.synapse_patterns) {
+                    if ($fileContent -match $pattern) {
+                        $synapseFound = $true
+                        break
+                    }
+                }
+                if (-not $synapseFound) {
+                    $standaloneDK += $fileName
+                }
+            }
+        }
+    }
+    
+    if ($standaloneDK.Count -gt 0) {
+        "**Standalone Domain Knowledge Files** ($($standaloneDK.Count) files):`n" + ($standaloneDK | ForEach-Object { "- $_" }) -join "`n" + "`n`n**Recommendations**:`n- Consider adding embedded synapse connections to integrate with core architecture`n- Review for potential cross-domain knowledge transfer opportunities`n- Evaluate for inclusion in active learning workflows"
+    } else {
+        "✅ **All domain knowledge files are properly integrated with the cognitive architecture.**"
+    }
+} else {
+    "No domain knowledge files detected."
+})
+
 ## 💤 Dream State Maintenance Results
 
 **Automated Processing**: Completed during unconscious dream state
-**Neural Maintenance**: Automated synaptic optimization protocols
-**Network Optimization**: Unconscious connection pattern enhancement
-**Cognitive Efficiency**: Enhanced through automated maintenance algorithms
+**Neural Maintenance**: $(if ($synapticConnections -gt 1000) { "Advanced synaptic network optimization with $synapticConnections connections" } else { "Standard synaptic optimization protocols" })
+**Network Optimization**: $(if ($triggerPatterns -gt 25) { "High-efficiency trigger pattern management ($triggerPatterns patterns)" } else { "Basic connection pattern enhancement" })
+**Cognitive Efficiency**: $(if ($embeddedSynapses -gt 200) { "Enhanced through $embeddedSynapses embedded synaptic connections" } else { "Standard automated maintenance algorithms" })
 
-## 🚀 Optimization Results
+## 🚀 Optimization Results & Recommendations
 
-**Memory Architecture Version**: v0.8.2 NILOCTBIUM
+**Memory Architecture Version**: $($config.version)
 **Maintenance Status**: $(if ($ReportOnly) { "DIAGNOSTIC COMPLETE" } else { "AUTOMATED MAINTENANCE COMPLETE" })
 **Network Efficiency**: $(if ($orphanFiles.Count -eq 0) { "MAXIMUM" } else { "REQUIRES OPTIMIZATION" })
-**Dream Processing**: Enhanced through unconscious neural optimization
+**Connectivity Score**: $connectivityRatio connections per file ($(if ($connectivityRatio -gt 40) { "EXCELLENT" } elseif ($connectivityRatio -gt 20) { "GOOD" } else { "NEEDS_IMPROVEMENT" }))
+
+### 📋 Next Actions
+$(if ($orphanFiles.Count -eq 0 -and $synapticConnections -gt 1000) {
+    "✅ **Cognitive architecture is operating at peak efficiency**`n- Continue routine neural maintenance every 24-48 hours`n- Monitor for new domain knowledge integration opportunities`n- Consider advanced lucid dream protocols for further optimization"
+} elseif ($orphanFiles.Count -eq 0) {
+    "✅ **Network connectivity is optimal**`n- Focus on enhancing synaptic connection density`n- Integrate standalone domain knowledge files`n- Implement cross-domain knowledge transfer protocols"
+} else {
+    "⚠️ **Immediate attention required**`n- Resolve $($orphanFiles.Count) orphan file(s) by adding appropriate references`n- Run 'dream --emergency-repair' if connectivity issues persist`n- Review memory file organization and synaptic patterns"
+})
 
 ---
 
