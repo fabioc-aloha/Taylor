@@ -1,7 +1,53 @@
 # Neural Memory Optimization and Synaptic Pruning Commands
 # Enhanced Dream Protocol Implementation (Automated Maintenance)
-# Date: July 27, 2025
-# Cognitive Architecture: NEWBORN v0.8.2 NILOCTBIUM
+# Date: August 7, 2025
+# Cognitive Architecture: Generic Cognitive System v1.0.0
+
+# Configuration for different cognitive architectures
+param(
+    [Parameter(Mandatory=$false)]
+    [string]$ConfigFile = "cognitive-config.json"
+)
+
+# Load cognitive architecture configuration
+function Get-CognitiveConfig {
+    param([string]$ConfigPath = "cognitive-config.json")
+    
+    $defaultConfig = @{
+        "architecture_name" = "Generic Cognitive System"
+        "version" = "1.0.0"
+        "global_memory_files" = @(".github/copilot-instructions.md")
+        "core_memory_files" = @(".github/instructions/alex-core.instructions.md")
+        "procedural_path" = ".github/instructions/*.instructions.md"
+        "episodic_path" = ".github/prompts/*.prompt.md"
+        "archive_path" = ".github/archive/*.md"
+        "domain_knowledge_path" = "domain-knowledge/*.md"
+        "report_path" = ".github/archive"
+        "synapse_patterns" = @(
+            '\[.*\.md\].*\(.*\).*-.*".*"',
+            '\[.*\.md\].*\('
+        )
+        "debug_patterns" = @("*azure-enterprise*", "*cognitive-core*")
+    }
+    
+    if (Test-Path $ConfigPath) {
+        try {
+            $config = Get-Content $ConfigPath -Raw | ConvertFrom-Json -AsHashtable
+            # Merge with defaults
+            foreach ($key in $defaultConfig.Keys) {
+                if (-not $config.ContainsKey($key)) {
+                    $config[$key] = $defaultConfig[$key]
+                }
+            }
+            return $config
+        } catch {
+            Write-Host "⚠️ Warning: Could not load config file. Using defaults." -ForegroundColor Yellow
+            return $defaultConfig
+        }
+    } else {
+        return $defaultConfig
+    }
+}
 
 function Invoke-DreamState {
     <#
@@ -18,6 +64,9 @@ function Invoke-DreamState {
 
     .PARAMETER ReportOnly
     Generate diagnostic report without making changes
+    
+    .PARAMETER ConfigFile
+    Path to cognitive architecture configuration file
     #>
 
     [CmdletBinding()]
@@ -27,13 +76,19 @@ function Invoke-DreamState {
         [string]$Mode = "synaptic-repair",
 
         [Parameter(Mandatory=$false)]
-        [switch]$ReportOnly
+        [switch]$ReportOnly,
+        
+        [Parameter(Mandatory=$false)]
+        [string]$ConfigFile = "cognitive-config.json"
     )
 
+    # Load cognitive architecture configuration
+    $config = Get-CognitiveConfig -ConfigPath $ConfigFile
+    
     $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-    $reportPath = ".github/archive/dream-state-$timestamp.md"
+    $reportPath = Join-Path $config.report_path "dream-state-$timestamp.md"
 
-    Write-Host "💤 Dream State Neural Maintenance - NEWBORN v0.8.2" -ForegroundColor Magenta
+    Write-Host "💤 Dream State Neural Maintenance - $($config.architecture_name) $($config.version)" -ForegroundColor Magenta
     Write-Host "Mode: $Mode" -ForegroundColor Yellow
     Write-Host "Timestamp: $timestamp" -ForegroundColor Gray
     Write-Host ""
@@ -41,18 +96,22 @@ function Invoke-DreamState {
     # Phase 1: Pre-Dream Assessment with Enhanced Validation
     Write-Host "🌙 Phase 1: Unconscious Cognitive Architecture Scan" -ForegroundColor Blue
     
-    # Debug: Check if Azure files exist
-    $azureInstructionsFile = Get-ChildItem ".github/instructions/azure-enterprise-architecture.instructions.md" -ErrorAction SilentlyContinue
-    $azurePromptFile = Get-ChildItem ".github/prompts/azure-enterprise-architecture-implementation.prompt.md" -ErrorAction SilentlyContinue
-    Write-Host "🔍 DEBUG: Azure instructions file exists: $(if ($azureInstructionsFile) { 'YES' } else { 'NO' })" -ForegroundColor Cyan
-    Write-Host "🔍 DEBUG: Azure prompt file exists: $(if ($azurePromptFile) { 'YES' } else { 'NO' })" -ForegroundColor Cyan
+    # Debug: Check if critical files exist (configurable patterns)
+    foreach ($pattern in $config.debug_patterns) {
+        $debugFiles = Get-ChildItem $config.procedural_path | Where-Object { $_.Name -like $pattern }
+        if ($debugFiles) {
+            foreach ($file in $debugFiles) {
+                Write-Host "🔍 DEBUG: Critical file exists: $($file.Name)" -ForegroundColor Cyan
+            }
+        }
+    }
 
     # Enhanced file discovery with error handling
     try {
-        $procedural = Get-ChildItem ".github/instructions/*.instructions.md" -ErrorAction Stop
-        $episodic = Get-ChildItem ".github/prompts/*.prompt.md" -ErrorAction Stop
-        $archived = Get-ChildItem ".github/archive/*.md" -ErrorAction SilentlyContinue
-        $domainKnowledge = Get-ChildItem "domain-knowledge/*.md" -ErrorAction SilentlyContinue
+        $procedural = Get-ChildItem $config.procedural_path -ErrorAction Stop
+        $episodic = Get-ChildItem $config.episodic_path -ErrorAction Stop
+        $archived = Get-ChildItem $config.archive_path -ErrorAction SilentlyContinue
+        $domainKnowledge = Get-ChildItem $config.domain_knowledge_path -ErrorAction SilentlyContinue
     } catch {
         Write-Host "⚠️ Warning: Could not access some memory directories" -ForegroundColor Yellow
         Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
@@ -70,29 +129,35 @@ function Invoke-DreamState {
     # Enhanced Orphan Detection with Multi-File Analysis
     Write-Host "`n🔍 Enhanced Orphan Memory Detection..." -ForegroundColor Yellow
 
-    $globalMemoryContent = Get-Content ".github/copilot-instructions.md" -Raw -ErrorAction SilentlyContinue
-    $alexCoreContent = Get-Content ".github/instructions/alex-core.instructions.md" -Raw -ErrorAction SilentlyContinue
+    # Load multiple memory files as configured
+    $memoryContents = @()
+    foreach ($memoryFile in ($config.global_memory_files + $config.core_memory_files)) {
+        $content = Get-Content $memoryFile -Raw -ErrorAction SilentlyContinue
+        if ($content) {
+            $memoryContents += $content
+            Write-Host "  Memory file loaded: $(Split-Path $memoryFile -Leaf)" -ForegroundColor Gray
+        }
+    }
     
-    # Debug content loading
-    Write-Host "  Global content loaded: $(if ($globalMemoryContent) { 'YES' } else { 'NO' })" -ForegroundColor Gray
-    Write-Host "  Alex core content loaded: $(if ($alexCoreContent) { 'YES' } else { 'NO' })" -ForegroundColor Gray
+    $combinedContent = $memoryContents -join "`n"
     
     $orphanFiles = @()
     $connectedFiles = @()
     $weaklyConnectedFiles = @()
 
-    if ($globalMemoryContent -or $alexCoreContent) {
-        # Combine content from both core architecture files
-        $combinedContent = "$globalMemoryContent`n$alexCoreContent"
-        
+    if ($combinedContent) {
         foreach ($file in ($procedural + $episodic)) {
             $fileName = $file.Name
             $fileBaseName = $fileName -replace '\.(instructions|prompt)\.md$', ''
             
-            # Debug output for Azure enterprise architecture files
-            if ($fileName -like "*azure-enterprise*") {
-                Write-Host "🔍 DEBUG: Checking $fileName" -ForegroundColor Cyan
-                Write-Host "  - Checking combinedContent match..." -ForegroundColor Gray
+            # Debug output for critical files
+            $isCriticalFile = $false
+            foreach ($pattern in $config.debug_patterns) {
+                if ($fileName -like $pattern) {
+                    $isCriticalFile = $true
+                    Write-Host "🔍 DEBUG: Checking critical file $fileName" -ForegroundColor Cyan
+                    break
+                }
             }
             
             # Check for strong connections (direct filename references in core files)
@@ -107,28 +172,37 @@ function Invoke-DreamState {
             }
             # Check for embedded synapses within the file itself
             else {
-                if ($fileName -like "*azure-enterprise*") {
+                if ($isCriticalFile) {
                     Write-Host "  - Checking embedded synapses..." -ForegroundColor Gray
                 }
                 $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
-                if ($fileContent -and ($fileContent -match '\[.*\.md\].*\(.*\).*-.*".*"')) {
-                    $connectedFiles += $file
-                    Write-Host "✅ Connected: $fileName" -ForegroundColor Green
-                    if ($fileName -like "*azure-enterprise*") {
-                        Write-Host "  - Connected via embedded synapses" -ForegroundColor Green
+                if ($fileContent) {
+                    $synapseFound = $false
+                    foreach ($pattern in $config.synapse_patterns) {
+                        if ($fileContent -match $pattern) {
+                            $synapseFound = $true
+                            break
+                        }
                     }
-                }
-                # True orphans
-                else {
+                    if ($synapseFound) {
+                        $connectedFiles += $file
+                        Write-Host "✅ Connected: $fileName" -ForegroundColor Green
+                        if ($isCriticalFile) {
+                            Write-Host "  - Connected via embedded synapses" -ForegroundColor Green
+                        }
+                    } else {
+                        $orphanFiles += $file
+                        Write-Host "❌ Orphan detected: $fileName" -ForegroundColor Red
+                        if ($isCriticalFile) {
+                            Write-Host "  - No synapses detected" -ForegroundColor Red
+                        }
+                    }
+                } else {
                     $orphanFiles += $file
                     Write-Host "❌ Orphan detected: $fileName" -ForegroundColor Red
-                    if ($fileName -like "*azure-enterprise*") {
-                        Write-Host "  - No synapses detected" -ForegroundColor Red
-                    }
                 }
             }
         }
-        
         # Additional analysis for domain knowledge files
         if ($domainKnowledge.Count -gt 0) {
             Write-Host "`n📚 Domain Knowledge Analysis:" -ForegroundColor Cyan
@@ -139,8 +213,19 @@ function Invoke-DreamState {
                 } else {
                     # Check for embedded synapses within domain knowledge files
                     $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
-                    if ($fileContent -and ($fileContent -match '\[.*\.md\].*\(.*\).*-.*".*"')) {
-                        Write-Host "✅ DK Connected: $fileName" -ForegroundColor Green
+                    if ($fileContent) {
+                        $synapseFound = $false
+                        foreach ($pattern in $config.synapse_patterns) {
+                            if ($fileContent -match $pattern) {
+                                $synapseFound = $true
+                                break
+                            }
+                        }
+                        if ($synapseFound) {
+                            Write-Host "✅ DK Connected: $fileName" -ForegroundColor Green
+                        } else {
+                            Write-Host "💡 DK Standalone: $fileName" -ForegroundColor Blue
+                        }
                     } else {
                         Write-Host "💡 DK Standalone: $fileName" -ForegroundColor Blue
                     }
@@ -148,8 +233,8 @@ function Invoke-DreamState {
             }
         }
     } else {
-        Write-Host "⚠️ Global memory files not found - creating basic structure" -ForegroundColor Yellow
-        # All files are orphans if no global memory exists
+        Write-Host "⚠️ Memory files not found - creating basic structure" -ForegroundColor Yellow
+        # All files are orphans if no memory exists
         $orphanFiles = $procedural + $episodic
     }
 
@@ -559,10 +644,14 @@ function dream {
     }
 }
 
-# Enhanced Helper Functions for Dream State v0.8.2
+# Enhanced Helper Functions for Dream State v1.0.0
 function Show-DreamHelp {
+    param([string]$ConfigFile = "cognitive-config.json")
+    
+    $config = Get-CognitiveConfig -ConfigPath $ConfigFile
+    
     Write-Host ""
-    Write-Host "💤 Dream State Automated Neural Maintenance - NEWBORN v0.8.2" -ForegroundColor Magenta
+    Write-Host "💤 Dream State Automated Neural Maintenance - $($config.architecture_name) $($config.version)" -ForegroundColor Magenta
     Write-Host "=================================================" -ForegroundColor Gray
     Write-Host ""
     Write-Host "🧠 PRIMARY MAINTENANCE COMMANDS:" -ForegroundColor Cyan
@@ -594,11 +683,13 @@ function Show-DreamHelp {
     Write-Host "# Generate reports without making changes" -ForegroundColor Gray
     Write-Host "  -DetailedOutput              " -NoNewline -ForegroundColor White
     Write-Host "# Show detailed processing information" -ForegroundColor Gray
+    Write-Host "  -ConfigFile <path>           " -NoNewline -ForegroundColor White
+    Write-Host "# Use custom cognitive configuration" -ForegroundColor Gray
     Write-Host ""
     Write-Host "💡 EXAMPLES:" -ForegroundColor Cyan
     Write-Host "  dream --health-check -ReportOnly" -ForegroundColor White
     Write-Host "  dream --neural-maintenance -DetailedOutput" -ForegroundColor White
-    Write-Host "  dream --emergency-repair" -ForegroundColor White
+    Write-Host "  dream --emergency-repair -ConfigFile 'my-config.json'" -ForegroundColor White
     Write-Host ""
 }
 
@@ -785,9 +876,11 @@ function scan-orphans {
 # Functions are available when script is dot-sourced
 # For module functionality, use neural-dream.psm1
 
-Write-Host "💤 Dream State Neural Maintenance Commands Loaded" -ForegroundColor Magenta
+# Load configuration and display loading message
+$loadConfig = Get-CognitiveConfig
+Write-Host "💤 Dream State Neural Maintenance Commands Loaded - $($loadConfig.architecture_name)" -ForegroundColor Magenta
 Write-Host "Type 'dream' for available automated maintenance commands" -ForegroundColor Yellow
 
 # NOTE: Meditation functions are NOT included in this script
 # Meditation is a CONSCIOUS process handled by the AI system, not PowerShell automation
-# See Step 3B for meditation protocol documentation
+# See cognitive architecture documentation for meditation protocol details
