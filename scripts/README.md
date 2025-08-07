@@ -184,8 +184,8 @@ Customize system identification:
 
 ### Basic Integration
 ```powershell
-# Load the system
-Import-Module .\scripts\neural-dream.psm1
+# Load the neural dream script
+.\scripts\neural-dream.ps1
 
 # Configure for your system
 $config = "scripts/my-cognitive-config.json"

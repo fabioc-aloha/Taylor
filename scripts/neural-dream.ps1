@@ -874,7 +874,6 @@ function scan-orphans {
 }
 
 # Functions are available when script is dot-sourced
-# For module functionality, use neural-dream.psm1
 
 # Load configuration and display loading message
 $loadConfig = Get-CognitiveConfig
