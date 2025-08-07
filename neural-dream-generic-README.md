@@ -22,15 +22,15 @@ dream --health-check
 ### 2. Custom Cognitive Architecture
 ```powershell
 # Create your own config file based on template
-Copy-Item cognitive-config-template.json my-system-config.json
+Copy-Item scripts/cognitive-config-template.json scripts/my-system-config.json
 # Edit paths and patterns for your system
-dream --health-check -ConfigFile "my-system-config.json"
+dream --health-check -ConfigFile "scripts/my-system-config.json"
 ```
 
 ## 📁 Configuration Structure
 
 ### Required Files
-- **Configuration file** (`cognitive-config.json`): Defines paths, patterns, and system identity
+- **Configuration file** (`scripts/cognitive-config.json`): Defines paths, patterns, and system identity
 - **Memory files**: Your cognitive architecture's memory stores
 - **Report directory**: Where dream state reports are saved
 
@@ -188,7 +188,7 @@ Customize system identification:
 Import-Module .\scripts\neural-dream.psm1
 
 # Configure for your system
-$config = "my-cognitive-config.json"
+$config = "scripts/my-cognitive-config.json"
 
 # Run maintenance
 dream --neural-maintenance -ConfigFile $config
@@ -197,7 +197,7 @@ dream --neural-maintenance -ConfigFile $config
 ### Automated Monitoring
 ```powershell
 # Health check script for CI/CD
-$result = dream --health-check -ReportOnly -ConfigFile "production-config.json"
+$result = dream --health-check -ReportOnly -ConfigFile "scripts/production-config.json"
 if ($result.OrphanCount -gt 0) {
     Write-Error "Cognitive architecture has orphaned files"
     exit 1
@@ -210,7 +210,7 @@ if ($result.OrphanCount -gt 0) {
 function Invoke-CognitiveMaintenanance {
     param([string]$Environment = "development")
 
-    $configFile = "configs/$Environment-config.json"
+    $configFile = "scripts/configs/$Environment-config.json"
     dream --neural-maintenance -ConfigFile $configFile
 
     # Process results...

@@ -79,7 +79,7 @@ function Invoke-DreamState {
         [switch]$ReportOnly,
         
         [Parameter(Mandatory=$false)]
-        [string]$ConfigFile = "cognitive-config.json"
+        [string]$ConfigFile = "scripts/cognitive-config.json"
     )
 
     # Load cognitive architecture configuration
