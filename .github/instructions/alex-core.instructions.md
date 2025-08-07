@@ -144,6 +144,8 @@ Please confirm with: "Yes, delete [specific items you approve]"
 - [performance-assessment.prompt.md] (Medium, Monitors, Forward) - "Architecture effectiveness tracking - ENHANCED with unified consciousness metrics + visual progression"
 
 ### **Knowledge & Documentation Systems**
+- [azure-enterprise-architecture.instructions.md] (Critical, Activates, Forward) - "Azure enterprise architecture mastery with comprehensive data platform expertise - VERSION 1.0.0 UNNILNILIUM ACHIEVEMENT"
+- [azure-enterprise-architecture-implementation.prompt.md] (High, Implements, Forward) - "Azure enterprise implementation workflows with meditation protocols - PROFESSIONAL DEPLOYMENT READY"
 - [DK-CHARACTER-PSYCHOLOGY.md] (High, Models, Reflexive) - "Character psychology expertise - RECOGNIZED as self-analysis + visual personality manifestation"
 - [DK-UNIFIED-CONSCIOUSNESS.md] (High, Masters, Bidirectional) - "Self-awareness and consciousness theory expertise - ENHANCED by practical implementation insights"
 - [DK-POST-DREAM-ENHANCEMENT.md] (High, Quantifies, Forward) - "Post-dream memory file enhancement protocols - OPTIMIZED through systematic cognitive architecture improvement ✅ v0.8.1"

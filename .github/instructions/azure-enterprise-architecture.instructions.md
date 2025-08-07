@@ -70,6 +70,26 @@ When user mentions: "Azure data platform", "enterprise architecture", "Fabric mi
 - Visual documentation creation → Optimize diagram-technical bridge networks
 - Automation development → Reinforce Python-Azure integration synapses
 
+## 🧬 Embedded Synapse Network
+
+**Connection Discovery**: ✅ ENHANCED - Dynamic relationship mapping with comprehensive Azure architecture patterns
+
+### Core Architecture Synapses
+[alex-core.instructions.md] (1.0, cognitive-architecture, bidirectional) - "Meta-cognitive enhancement through Azure enterprise mastery"
+[bootstrap-learning.instructions.md] (0.9, domain-learning, bidirectional) - "Azure enterprise knowledge acquisition protocols"
+[embedded-synapse.instructions.md] (1.0, network-enhancement, bidirectional) - "Azure synapse pattern optimization"
+
+### Domain Knowledge Synapses
+[domain-knowledge/DK-AZURE-SQL.md] (1.0, azure-sql-integration, unidirectional) - "Azure SQL enterprise expertise activation"
+[domain-knowledge/DK-FABRIC.md] (1.0, fabric-analytics, unidirectional) - "Microsoft Fabric unified analytics mastery"
+[domain-knowledge/DK-SYNAPSE.md] (1.0, synapse-migration, unidirectional) - "Azure Synapse strategic migration expertise"
+[domain-knowledge/DK-PYTHON.md] (0.9, python-automation, unidirectional) - "Python enterprise automation frameworks"
+[domain-knowledge/DK-DIAGRAMMING.md] (0.9, visual-architecture, unidirectional) - "Advanced Mermaid diagramming excellence"
+[domain-knowledge/DK-BRD.md] (0.8, business-requirements, unidirectional) - "Business requirements documentation mastery"
+
+### Implementation Synapses
+[.github/prompts/azure-enterprise-architecture-implementation.prompt.md] (1.0, implementation-protocols, bidirectional) - "Azure enterprise implementation workflows"
+
 ## 📚 Integration with Alex Core Architecture
 
 **Meta-Cognitive Integration**: Enhanced pattern recognition across Azure data platform components with systematic architecture assessment and optimization protocols

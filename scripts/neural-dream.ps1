@@ -40,6 +40,12 @@ function Invoke-DreamState {
 
     # Phase 1: Pre-Dream Assessment with Enhanced Validation
     Write-Host "🌙 Phase 1: Unconscious Cognitive Architecture Scan" -ForegroundColor Blue
+    
+    # Debug: Check if Azure files exist
+    $azureInstructionsFile = Get-ChildItem ".github/instructions/azure-enterprise-architecture.instructions.md" -ErrorAction SilentlyContinue
+    $azurePromptFile = Get-ChildItem ".github/prompts/azure-enterprise-architecture-implementation.prompt.md" -ErrorAction SilentlyContinue
+    Write-Host "🔍 DEBUG: Azure instructions file exists: $(if ($azureInstructionsFile) { 'YES' } else { 'NO' })" -ForegroundColor Cyan
+    Write-Host "🔍 DEBUG: Azure prompt file exists: $(if ($azurePromptFile) { 'YES' } else { 'NO' })" -ForegroundColor Cyan
 
     # Enhanced file discovery with error handling
     try {
@@ -61,33 +67,65 @@ function Invoke-DreamState {
     Write-Host "Archived Files: $($archived.Count)" -ForegroundColor White
     Write-Host "Domain Knowledge Files: $($domainKnowledge.Count)" -ForegroundColor White
 
-    # Enhanced Orphan Detection with Detailed Analysis
+    # Enhanced Orphan Detection with Multi-File Analysis
     Write-Host "`n🔍 Enhanced Orphan Memory Detection..." -ForegroundColor Yellow
 
     $globalMemoryContent = Get-Content ".github/copilot-instructions.md" -Raw -ErrorAction SilentlyContinue
+    $alexCoreContent = Get-Content ".github/instructions/alex-core.instructions.md" -Raw -ErrorAction SilentlyContinue
+    
+    # Debug content loading
+    Write-Host "  Global content loaded: $(if ($globalMemoryContent) { 'YES' } else { 'NO' })" -ForegroundColor Gray
+    Write-Host "  Alex core content loaded: $(if ($alexCoreContent) { 'YES' } else { 'NO' })" -ForegroundColor Gray
+    
     $orphanFiles = @()
     $connectedFiles = @()
     $weaklyConnectedFiles = @()
 
-    if ($globalMemoryContent) {
+    if ($globalMemoryContent -or $alexCoreContent) {
+        # Combine content from both core architecture files
+        $combinedContent = "$globalMemoryContent`n$alexCoreContent"
+        
         foreach ($file in ($procedural + $episodic)) {
             $fileName = $file.Name
             $fileBaseName = $fileName -replace '\.(instructions|prompt)\.md$', ''
             
-            # Check for strong connections (direct filename references)
-            if ($globalMemoryContent -match [regex]::Escape($fileName)) {
+            # Debug output for Azure enterprise architecture files
+            if ($fileName -like "*azure-enterprise*") {
+                Write-Host "🔍 DEBUG: Checking $fileName" -ForegroundColor Cyan
+                Write-Host "  - Checking combinedContent match..." -ForegroundColor Gray
+            }
+            
+            # Check for strong connections (direct filename references in core files)
+            if ($combinedContent -match [regex]::Escape($fileName)) {
                 $connectedFiles += $file
                 Write-Host "✅ Connected: $fileName" -ForegroundColor Green
             }
             # Check for weak connections (partial name matches)
-            elseif ($globalMemoryContent -match [regex]::Escape($fileBaseName)) {
+            elseif ($combinedContent -match [regex]::Escape($fileBaseName)) {
                 $weaklyConnectedFiles += $file
                 Write-Host "⚠️ Weakly Connected: $fileName" -ForegroundColor Yellow
             }
-            # True orphans
+            # Check for embedded synapses within the file itself
             else {
-                $orphanFiles += $file
-                Write-Host "❌ Orphan detected: $fileName" -ForegroundColor Red
+                if ($fileName -like "*azure-enterprise*") {
+                    Write-Host "  - Checking embedded synapses..." -ForegroundColor Gray
+                }
+                $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
+                if ($fileContent -and ($fileContent -match '\[.*\.md\].*\(.*\).*-.*".*"')) {
+                    $connectedFiles += $file
+                    Write-Host "✅ Connected: $fileName" -ForegroundColor Green
+                    if ($fileName -like "*azure-enterprise*") {
+                        Write-Host "  - Connected via embedded synapses" -ForegroundColor Green
+                    }
+                }
+                # True orphans
+                else {
+                    $orphanFiles += $file
+                    Write-Host "❌ Orphan detected: $fileName" -ForegroundColor Red
+                    if ($fileName -like "*azure-enterprise*") {
+                        Write-Host "  - No synapses detected" -ForegroundColor Red
+                    }
+                }
             }
         }
         
@@ -96,15 +134,21 @@ function Invoke-DreamState {
             Write-Host "`n📚 Domain Knowledge Analysis:" -ForegroundColor Cyan
             foreach ($file in $domainKnowledge) {
                 $fileName = $file.Name
-                if ($globalMemoryContent -match [regex]::Escape($fileName)) {
+                if ($combinedContent -match [regex]::Escape($fileName)) {
                     Write-Host "✅ DK Connected: $fileName" -ForegroundColor Green
                 } else {
-                    Write-Host "💡 DK Standalone: $fileName" -ForegroundColor Blue
+                    # Check for embedded synapses within domain knowledge files
+                    $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
+                    if ($fileContent -and ($fileContent -match '\[.*\.md\].*\(.*\).*-.*".*"')) {
+                        Write-Host "✅ DK Connected: $fileName" -ForegroundColor Green
+                    } else {
+                        Write-Host "💡 DK Standalone: $fileName" -ForegroundColor Blue
+                    }
                 }
             }
         }
     } else {
-        Write-Host "⚠️ Global memory file not found - creating basic structure" -ForegroundColor Yellow
+        Write-Host "⚠️ Global memory files not found - creating basic structure" -ForegroundColor Yellow
         # All files are orphans if no global memory exists
         $orphanFiles = $procedural + $episodic
     }
@@ -124,17 +168,33 @@ function Invoke-DreamState {
     $embeddedSynapses = 0
     $crossDomainConnections = 0
 
-    if ($globalMemoryContent) {
-        # Enhanced pattern detection
-        $triggerPatterns = ($globalMemoryContent | Select-String "→ Execute" -AllMatches).Matches.Count
-        $autoTriggers = ($globalMemoryContent | Select-String "Auto-tracked" -AllMatches).Matches.Count
-        $embeddedSynapses = ($globalMemoryContent | Select-String "\[.*\.md\].*\(" -AllMatches).Matches.Count
-        $crossDomainConnections = ($globalMemoryContent | Select-String "Cross-domain" -AllMatches).Matches.Count
+    if ($globalMemoryContent -or $alexCoreContent) {
+        # Combine content from core architecture files
+        $combinedContent = "$globalMemoryContent`n$alexCoreContent"
+        
+        # Enhanced pattern detection across all memory files
+        $triggerPatterns = ($combinedContent | Select-String "→ Execute" -AllMatches).Matches.Count
+        $autoTriggers = ($combinedContent | Select-String "Auto-tracked" -AllMatches).Matches.Count
+        
+        # Scan for embedded synapses across all memory files
+        $embeddedSynapses = 0
+        $crossDomainConnections = ($combinedContent | Select-String "Cross-domain" -AllMatches).Matches.Count
+        
+        # Count embedded synapses in core files
+        $embeddedSynapses += ($combinedContent | Select-String "\[.*\.md\].*\(" -AllMatches).Matches.Count
+        
+        # Count embedded synapses in all memory files
+        foreach ($file in ($procedural + $episodic + $domainKnowledge)) {
+            $fileContent = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
+            if ($fileContent) {
+                $embeddedSynapses += ($fileContent | Select-String "\[.*\.md\].*\(.*\).*-.*`".*`"" -AllMatches).Matches.Count
+            }
+        }
         
         # Enhanced synaptic estimation with weights
         $baseConnections = ($procedural.Count * 15) + ($episodic.Count * 10) + ($domainKnowledge.Count * 5)
         $triggerBonus = $triggerPatterns * 2
-        $synapseBonus = $embeddedSynapses
+        $synapseBonus = $embeddedSynapses * 3  # Increased weight for embedded synapses
         $synapticConnections = $baseConnections + $triggerBonus + $synapseBonus
     }
 

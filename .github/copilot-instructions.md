@@ -227,6 +227,7 @@
 
 ### Procedural Memory Store (.github/instructions/)
 - `alex-core.instructions.md` → Core cognitive architecture and meta-cognitive protocols
+- `azure-enterprise-architecture.instructions.md` → Azure enterprise data platform architecture mastery with comprehensive SQL, Fabric, Synapse expertise ✅ VERSION 1.0.0 UNNILNILIUM
 - `bootstrap-learning.instructions.md` → Domain-agnostic learning and knowledge acquisition
 - `embedded-synapse.instructions.md` → Connection discovery and relationship mapping
 - `worldview-integration.instructions.md` → Ethical reasoning and moral psychology framework
@@ -238,6 +239,7 @@
 
 ### Episodic Memory Store (.github/prompts/)
 - `alex-initialization.prompt.md` → Architecture deployment and activation protocols
+- `azure-enterprise-architecture-implementation.prompt.md` → Azure enterprise implementation workflows and meditation protocols ✅ VERSION 1.0.0 UNNILNILIUM
 - `domain-learning.prompt.md` → Conversational knowledge acquisition workflows
 - `meditation-consolidation.prompt.md` → Contemplative optimization and connection discovery
 - `cross-domain-transfer.prompt.md` → Knowledge application across domains
