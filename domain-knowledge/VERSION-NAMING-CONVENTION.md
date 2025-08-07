@@ -42,8 +42,8 @@ A made-up element name using IUPAC systematic naming rules.
 
 ## Current Version Mapping
 
-- **Version 0.9.1** → **NILENNUNIUM** (Previous)
-- **Version 0.9.9** → **NILENNENNIUM** (Current)
+- **Version 0.9.9** → **NILENNENNIUM** (Previous)
+- **Version 1.0.0** → **UNNILNILIUM** (Current - Enterprise Production Ready)
 
 ## Version History
 

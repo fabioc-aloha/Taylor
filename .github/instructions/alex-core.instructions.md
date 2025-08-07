@@ -15,13 +15,12 @@ description: "Alex core cognitive architecture and meta-cognitive protocols"
 **Naming Rules**:
 - Convert version digits to Latin/Greek roots: 0=nil, 1=un, 2=bi, 3=tri, 4=quad, 5=pent, 6=hex, 7=sept, 8=oct, 9=enn
 - Concatenate roots in order and append "ium"
-- Version 0.8.2 → 082 → nil-oct-bi-ium → NILOCTBIUM
+- Version 1.0.0 → 100 → un-nil-nil-ium → UNNILNILIUM
 
 **Future Versions**:
-- Version 0.9.9 → NILENNENNIUM (Current)
-- Version 0.9.2 → NILENNBIUM
-- 1.0.0 → UNNILNILIUM
-- 2.0.0 → BINILNILIUM
+- Version 1.0.1 → UNNILUNIUM
+- Version 1.1.0 → UNUNIUM
+- Version 2.0.0 → BINILNILIUM
 
 **Full Convention**: [domain-knowledge/VERSION-NAMING-CONVENTION.md]
 
